@@ -1,0 +1,42 @@
+{
+  "name": "assignment-headlines-weather-data",
+  "version": "1.0.0",
+  "description": "topheadlines-weather-report",
+  "main": "src/server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod-start": "node src/server",
+    "start": "ts-node -r tsconfig-paths/register src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shivam4415/assignment-headlines-weather-data.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shivam4415/assignment-headlines-weather-data/issues"
+  },
+  "homepage": "https://github.com/Shivam4415/assignment-headlines-weather-data#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.0.0",
+    "pg": "^8.6.0",
+    "typeorm": "^0.2.32"
+  },
+  "engines": {
+    "node": "10.22.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.3",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-router": "^7.4.2",
+    "@types/node": "^15.6.1",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "^3.9.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.3.2"
+  }
+}
