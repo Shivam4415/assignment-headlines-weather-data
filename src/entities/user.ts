@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { AccessTokens } from "./accessTokens";
 
 @Entity("api_users")
 export class User extends BaseEntity {
@@ -13,4 +14,10 @@ export class User extends BaseEntity {
 
   @Column()
   public password: string;
+
+  @OneToMany((type) => AccessTokens, (accessTokens) => accessTokens.user)
+  public accessTokens: AccessTokens[];
+
+  @Column()
+  public hasApiAccess: boolean;
 }

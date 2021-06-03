@@ -5,14 +5,8 @@ import { AuthenticationController } from "../controllers/authentication.controll
 
 const router = new Router();
 
-router.post(
-  "/apiAccess",
-  AuthenticationController.AuthenticateInternalCall,
-  UserController.SetApiAccess
-);
+router.get("/weather", NewsController.get5DayWeatherReport);
 
-router.use(AuthenticationController.AuthenticateApi);
+router.post("/signup", UserController.Register);
 
-router.get("/news", NewsController.getNews);
-
-export const apiRoutes = router.routes();
+export const openRoutes = router.routes();

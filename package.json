@@ -4,7 +4,7 @@
   "description": "topheadlines-weather-report",
   "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --runInBand",
     "prod-start": "node src/server",
     "start": "ts-node -r tsconfig-paths/register src/server.ts"
   },
@@ -19,10 +19,20 @@
   },
   "homepage": "https://github.com/Shivam4415/assignment-headlines-weather-data#readme",
   "dependencies": {
+    "@types/basic-auth": "^1.1.3",
+    "@types/lodash": "^4.14.170",
+    "axios": "^0.21.1",
+    "basic-auth": "^2.0.1",
+    "btoa": "^1.2.1",
+    "date-and-time": "^1.0.1",
     "dotenv": "^10.0.0",
+    "jest-serial-runner": "^1.1.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^10.0.0",
+    "ksuid": "^2.0.0",
+    "lodash": "^4.17.21",
+    "node-cache": "^5.1.2",
     "pg": "^8.6.0",
     "typeorm": "^0.2.32"
   },
@@ -30,10 +40,13 @@
     "node": "10.22.1"
   },
   "devDependencies": {
+    "@types/date-and-time": "^0.13.0",
     "@types/koa": "^2.13.3",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-router": "^7.4.2",
     "@types/node": "^15.6.1",
+    "jest": "^27.0.3",
+    "newsapi": "^2.4.1",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.9.0",
     "tslint-config-prettier": "^1.18.0",
