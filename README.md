@@ -43,7 +43,7 @@ npm start to start project at port 1337
 You must have redis cache installed
 Use following command to install for MAS-OS:
 `
-brew install redis
+brew install redis, 
 brew services start redis
  `
  OR 
