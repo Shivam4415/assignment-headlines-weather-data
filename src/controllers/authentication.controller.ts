@@ -101,11 +101,15 @@ export class AuthenticationController {
 
   public static async getDataFromCache(ctx: Context, next: any) {
     try {
+      const location = ctx.request.query.location?.toString() || "kolkata";
       const data = await redisStorage.get("data");
-      if (data.length > 0) {
-        ctx.body = JSON.parse(data[0]);
-      } else {
+      const res = data.find((d: string) => {
+        return JSON.parse(d).location === location;
+      });
+      if (!res) {
         return next();
+      } else {
+        ctx.body = (res && JSON.parse(res)) || [];
       }
     } catch (err) {
       ctx.body = err.message;
