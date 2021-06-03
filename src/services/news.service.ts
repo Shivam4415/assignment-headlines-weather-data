@@ -56,6 +56,7 @@ export class NewsServices {
       }
       return {
         location,
+        timeStamp: data.list[0].dt_txt,
         count: data.cnt,
         data: data.list,
       };

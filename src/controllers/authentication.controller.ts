@@ -81,22 +81,25 @@ export class AuthenticationController {
     }
   }
 
-  public static async getDataFromRedis(ctx: Context, next: any) {
-    try {
-      await client.get("postData", (err: any, redisData: any) => {
-        if (err) {
-          throw err;
-        } else if (redisData) {
-          ctx.body = JSON.parse(redisData);
-          return;
-        } else {
-          next();
-        }
-      });
-    } catch (err) {
-      ctx.body = err.message;
-      ctx.status = HttpStatusCode.InternalServerError;
+  public static dateFormatter(dateTime: Date) {
+    const formatString = (s: string) => {
+      return s.length === 1 ? `0${s}` : s;
+    };
+    const year = dateTime.getFullYear();
+    const month = formatString((dateTime.getMonth() + 1).toString());
+    const date = formatString(dateTime.getDate().toString());
+    const hour = formatString(dateTime.getHours().toString());
+    return `${year}-${month}-${date} ${hour}:00:00`;
+  }
+
+  public static isValidCachedata(cachedDate: string) {
+    const currentDate = AuthenticationController.dateFormatter(new Date());
+    const timeOffset =
+      (Date.parse(currentDate) - Date.parse(cachedDate)) / 36e5;
+    if (timeOffset === 6) {
+      return false;
     }
+    return true;
   }
 
   public static async getDataFromCache(ctx: Context, next: any) {
@@ -106,10 +109,16 @@ export class AuthenticationController {
       const res = data.find((d: string) => {
         return JSON.parse(d).location === location;
       });
-      if (!res) {
+      const response = (res && JSON.parse(res)) || null;
+      const isValidCache =
+        (response &&
+          AuthenticationController.isValidCachedata(response.timeStamp)) ||
+        false;
+      if (!response && !isValidCache) {
+        redisStorage.remove("data", JSON.stringify(response));
         return next();
       } else {
-        ctx.body = (res && JSON.parse(res)) || [];
+        ctx.body = response;
       }
     } catch (err) {
       ctx.body = err.message;
