@@ -3,6 +3,9 @@ import basicAuth from "basic-auth";
 import Message from "src/messages";
 import HttpStatusCode from "src/httpStatusCode";
 import { UserServices } from "src/services/user.services";
+import { redisStorage } from "../storage/redis";
+const redis = require("redis");
+const client = redis.createClient();
 
 export class AuthenticationController {
   public static async AuthenticateApi(ctx: Context, next: any) {
@@ -75,6 +78,38 @@ export class AuthenticationController {
     } catch (err) {
       ctx.body = err.message;
       ctx.status = HttpStatusCode.Unauthorized;
+    }
+  }
+
+  public static async getDataFromRedis(ctx: Context, next: any) {
+    try {
+      await client.get("postData", (err: any, redisData: any) => {
+        if (err) {
+          throw err;
+        } else if (redisData) {
+          ctx.body = JSON.parse(redisData);
+          return;
+        } else {
+          next();
+        }
+      });
+    } catch (err) {
+      ctx.body = err.message;
+      ctx.status = HttpStatusCode.InternalServerError;
+    }
+  }
+
+  public static async getDataFromCache(ctx: Context, next: any) {
+    try {
+      const data = await redisStorage.get("data");
+      if (data.length > 0) {
+        ctx.body = JSON.parse(data[0]);
+      } else {
+        return next();
+      }
+    } catch (err) {
+      ctx.body = err.message;
+      ctx.status = HttpStatusCode.InternalServerError;
     }
   }
 }

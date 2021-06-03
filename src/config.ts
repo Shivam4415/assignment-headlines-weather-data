@@ -1,13 +1,6 @@
-export interface IConfig {
-  port: number;
-  isLocal: boolean;
-  newsApiEndPoint: string;
-  newsApiKey: string;
-  weatherEndPoint: string;
-  weatherApiKey: string;
-}
+import * as Interfaces from "./types/interfaces";
 
-export const config: IConfig = {
+export const config: Interfaces.IConfig = {
   port: parseInt(process.env.NODE_PORT || process.env.PORT || "1337", 10),
   isLocal: process.env.NODE_ENV === "local",
   newsApiEndPoint: "https://newsapi.org/v2/",

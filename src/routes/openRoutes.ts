@@ -4,9 +4,12 @@ import { UserController } from "src/controllers/user.controller";
 import { AuthenticationController } from "../controllers/authentication.controller";
 
 const router = new Router();
-
-router.get("/weather", NewsController.get5DayWeatherReport);
-
 router.post("/signup", UserController.Register);
+
+router.get(
+  "/weather",
+  AuthenticationController.getDataFromCache,
+  NewsController.get5DayWeatherReport
+);
 
 export const openRoutes = router.routes();

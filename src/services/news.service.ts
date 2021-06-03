@@ -1,5 +1,6 @@
 import { config } from "src/config";
 import { isDefinedAndNotNullAndNotEmpty } from "src/utils";
+import Message from "src/messages";
 const NewsAPI = require("newsapi");
 const axios = require("axios");
 
@@ -26,6 +27,9 @@ export class NewsServices {
             return response.articles;
           });
       }
+      if (!data) {
+        throw Error(Message.NotFound);
+      }
       return {
         count: data.length,
         data,
@@ -47,6 +51,9 @@ export class NewsServices {
           console.log(err);
           throw err;
         });
+      if (!data) {
+        throw Error(Message.NotFound);
+      }
       return {
         location,
         count: data.cnt,
