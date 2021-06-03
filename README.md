@@ -1,6 +1,6 @@
 # assignment-headlines-weather-data
 
-Prerequisites:
+Prerequisites Knowledge:
 - nodejs
 - redis cache
 - typescript
